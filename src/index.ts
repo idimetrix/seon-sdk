@@ -3,7 +3,7 @@ import { FraudApiRequest, FraudApiResponse } from "./types";
 export class Seon {
   constructor(
     private readonly key: string,
-    private readonly url: string = "https://api.us-east-1-main.seon.io/SeonRestService/fraud-api/v2"
+    private readonly url: string = "https://api.us-east-1-main.seon.io/SeonRestService/fraud-api/v2",
     // private readonly url: string = "https://api.seon.io/SeonRestService/fraud-api/v2",
   ) {}
 
@@ -19,7 +19,8 @@ export class Seon {
     });
 
     if (response.ok) {
-      const json: FraudApiResponse = (await response.json()) as FraudApiResponse;
+      const json: FraudApiResponse =
+        (await response.json()) as FraudApiResponse;
 
       return json;
     } else {

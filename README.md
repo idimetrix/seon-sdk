@@ -23,7 +23,9 @@ import { Seon, FraudApiRequest, FraudApiResponse } from "seon-sdk";
 
 const seon = new Seon(process.env.SEON_KEY, process.env.SEON_URL);
 
-const request: FraudApiRequest = { /* PARAMETERS */ };
+const request: FraudApiRequest = {
+  /* PARAMETERS */
+};
 
 const response: FraudApiResponse = await seon.fraud(request);
 

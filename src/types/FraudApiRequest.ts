@@ -28,7 +28,14 @@ export interface APIRequestConfig {
   aml?: {
     version: string; // Current version of the API. Example: v1
     monitoring_required?: boolean; // Optional. Enable or disable monitoring.
-    monitoring_schedule?: "ON_CHANGE" | "DAILY" | "WEEKLY" | "MONTHLY" | "QUARTERLY" | "TWICE_A_YEAR" | "EVERY_YEAR"; // Monitoring interval
+    monitoring_schedule?:
+      | "ON_CHANGE"
+      | "DAILY"
+      | "WEEKLY"
+      | "MONTHLY"
+      | "QUARTERLY"
+      | "TWICE_A_YEAR"
+      | "EVERY_YEAR"; // Monitoring interval
     fuzzy_enabled?: boolean; // Optional. Enable or disable fuzzy search.
     fuzzy_config?: object; // Optional. Fuzzy search configuration.
     phonetic_search_enabled?: boolean; // Optional. Enable or disable phonetic search.
