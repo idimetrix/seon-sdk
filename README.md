@@ -728,3 +728,7 @@ See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes.
 [![Request Demo](https://img.shields.io/badge/Request-Demo-orange?style=for-the-badge)](https://seon.io/demo)
 
 </div>
+
+---
+
+Built by the team behind [Planoda](https://planoda.com/?utm_source=npm&utm_medium=referral&utm_campaign=seon-sdk) — an AI-native work platform, currently pre-launch and building in public.
