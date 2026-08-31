@@ -27,7 +27,7 @@
     "bootstrap": "pnpm install && pnpm format",
     "type": "tsc --noEmit --incremental",
     "tsc:clean": "tsc --build --clean",
-    "prepare": "husky",
+    "prepare": "husky && npm run build",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -67,9 +67,11 @@
   ],
   "files": [
     "dist",
+    "src",
     "docs",
     "package.json",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",

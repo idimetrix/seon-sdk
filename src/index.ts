@@ -32,6 +32,29 @@
 import { FraudApiRequest, FraudApiResponse } from "./types";
 
 /**
+ * Error logging function type
+ *
+ * Allows SDK users to provide their own logging function
+ * instead of using the default console logging.
+ *
+ * @example
+ * ```typescript
+ * // Custom logger function
+ * const customLogger = (message: string, meta: Record<string, unknown>) => {
+ *   myLoggingService.error(message, meta);
+ * };
+ *
+ * const seon = new Seon(apiKey, undefined, true, customLogger);
+ * ```
+ */
+export type ErrorLogger = (
+  // eslint-disable-next-line no-unused-vars
+  message: string,
+  // eslint-disable-next-line no-unused-vars
+  meta: Record<string, unknown>,
+) => void;
+
+/**
  * Main SEON SDK client class for fraud detection and prevention
  *
  * The primary class for interacting with SEON's Fraud Detection API.
@@ -96,12 +119,16 @@ export class Seon {
   // Private property to control error logging behavior
   private readonly enableErrorLogging: boolean;
 
+  // Private property to store the logger function
+  private readonly logger: ErrorLogger;
+
   /**
    * Creates a new SEON fraud detection client instance
    *
    * @param key - Your SEON API key for authentication
    * @param url - Optional custom API endpoint URL (defaults to production)
-   * @param enableErrorLogging - Whether to log errors to console (defaults to true in non-test environments)
+   * @param enableErrorLogging - Whether to log errors (defaults to true in non-test environments)
+   * @param logger - Optional custom logging function (defaults to console.error)
    *
    * @example
    * ```typescript
@@ -113,22 +140,33 @@ export class Seon {
    *
    * // Create client with error logging disabled
    * const seon = new Seon('your-api-key', undefined, false);
+   *
+   * // Create client with custom logger
+   * const customLogger = (message, meta) => myLoggingService.error(message, meta);
+   * const seon = new Seon('your-api-key', undefined, true, customLogger);
    * ```
    */
   constructor(
     key: string,
     url?: string,
     enableErrorLogging: boolean = process.env.NODE_ENV !== "test",
+    logger?: ErrorLogger,
   ) {
     // Store the provided API key for use in all fraud detection requests
     this.key = key;
 
     // Use provided URL or default to SEON's production fraud API endpoint
-    this.url =
-      url || "https://api.seon.io/SeonRestService/fraud-api/v2.0/detect-fraud";
+    this.url = url || "https://api.seon.io/SeonRestService/fraud-api/v2";
 
     // Configure error logging based on environment or explicit setting
     this.enableErrorLogging = enableErrorLogging;
+
+    // Use provided logger or default to console.error
+    this.logger =
+      logger ||
+      ((message: string, meta: Record<string, unknown>) => {
+        console.error(message, meta);
+      });
   }
 
   /**
@@ -292,30 +330,33 @@ export class Seon {
 
       // Return the parsed and typed fraud analysis results
       return json;
-    } else {
-      // Handle API error responses by extracting error details
-      const text = await response.text();
-
-      // Log error details for debugging and monitoring purposes
-      // Note: In production, consider using a proper logging service
-      if (this.enableErrorLogging) {
-        console.error(response.status, response.statusText, text);
-      }
-
-      // Return standardized error response structure for consistent error handling
-      return {
-        // Indicate that the API call failed
-        success: false,
-
-        // Provide structured error information with HTTP status and details
-        error: {
-          [`${response.status} - ${response.statusText}`]: text,
-        },
-
-        // No data payload available due to error
-        data: undefined,
-      };
     }
+
+    // Handle API error responses by extracting error details
+    const text = await response.text();
+
+    // Log error details for debugging and monitoring purposes
+    // Note: In production, consider using a proper logging service
+    if (this.enableErrorLogging) {
+      this.logger(text, {
+        status: response.status,
+        statusText: response.statusText,
+      });
+    }
+
+    // Return standardized error response structure for consistent error handling
+    return {
+      // Indicate that the API call failed
+      success: false,
+
+      // Provide structured error information with HTTP status and details
+      error: {
+        [`${response.status} - ${response.statusText}`]: text,
+      },
+
+      // No data payload available due to error
+      data: undefined,
+    };
   }
 }
 
