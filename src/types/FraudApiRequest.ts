@@ -469,76 +469,76 @@ export interface APIRequestConfig {
  */
 export interface APIRequestItem {
   /**
-   * Unique product identifier in the merchant's system
+   * Optional unique product identifier in the merchant's system
    * Internal SKU or product ID used by the merchant
    * @example "PROD-12345"
    * @type {string}
    */
-  item_id: string;
+  item_id?: string;
 
   /**
-   * Quantity of the item being purchased
+   * Optional quantity of the item being purchased
    * Number of units of this specific item
    * @example 2
    * @type {number}
    */
-  item_quantity: number;
+  item_quantity?: number;
 
   /**
-   * Human-readable name of the product
+   * Optional human-readable name of the product
    * Display name for the product as shown to customers
    * @example "Apple iPhone 14 Pro 256GB Space Black"
    * @type {string}
    */
-  item_name: string;
+  item_name?: string;
 
   /**
-   * Price per unit of the item
+   * Optional price per unit of the item
    * Individual item price before quantity multiplication
    * @example 999.99
    * @type {number}
    */
-  item_price: number;
+  item_price?: number;
 
   /**
-   * Store or warehouse fulfilling the order
+   * Optional store or warehouse fulfilling the order
    * Physical or virtual store handling this item
    * @example "Downtown Electronics Store"
    * @type {string}
    */
-  item_store: string;
+  item_store?: string;
 
   /**
-   * ISO 3166-1 alpha-2 country code for the fulfilling store
+   * Optional ISO 3166-1 alpha-2 country code for the fulfilling store
    * Two-character country code where the item ships from
    * @example "US"
    * @type {string}
    */
-  item_store_country: string;
+  item_store_country?: string;
 
   /**
-   * Product category classification
+   * Optional product category classification
    * Categorical classification for fraud pattern analysis
    * @example "electronics"
    * @type {string}
    */
-  item_category: string;
+  item_category?: string;
 
   /**
-   * URL to the product description or details page
+   * Optional URL to the product description or details page
    * Direct link to the product on the merchant's website
    * @example "https://store.example.com/products/iphone-14-pro"
    * @type {string}
    */
-  item_url: string;
+  item_url?: string;
 
   /**
-   * Custom fields for additional item-specific information
+   * Optional custom fields for additional item-specific information
    * Flexible object for merchant-specific item metadata
    * @example { "warranty_months": 24, "color": "space_black", "storage": "256gb" }
    * @type {Record<string, string | boolean | number>}
    */
-  item_custom_fields: {
+  item_custom_fields?: {
     /**
      * Dynamic custom field key-value pairs
      * Allows any string key with string, boolean, or number values
@@ -1222,6 +1222,15 @@ export interface FraudApiRequest {
    *
    */
   merchant_id?: string;
+
+  /**
+   * Optional merchant name
+   * Name of the merchant or sub-merchant
+   * @example "Apple Inc."
+   * @type {string}
+   *
+   */
+  merchant_name?: string;
 
   /**
    * Optional merchant account creation timestamp

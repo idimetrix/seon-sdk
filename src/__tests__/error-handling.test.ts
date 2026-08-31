@@ -385,11 +385,10 @@ describe("Error Handling and Edge Cases", () => {
 
       await seonWithLogging.fraud({ email: "test@example.com" });
 
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        400,
-        "Bad Request",
-        "Invalid request format",
-      );
+      expect(consoleErrorSpy).toHaveBeenCalledWith("Invalid request format", {
+        status: 400,
+        statusText: "Bad Request",
+      });
     });
   });
 });

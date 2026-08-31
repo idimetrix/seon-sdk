@@ -286,11 +286,10 @@ describe("Seon SDK", () => {
       await seonWithLogging.fraud(mockRequest);
 
       // Verify error was logged
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        500,
-        "Internal Server Error",
-        errorText,
-      );
+      expect(consoleErrorSpy).toHaveBeenCalledWith(errorText, {
+        status: 500,
+        statusText: "Internal Server Error",
+      });
     });
 
     it("should handle network errors", async () => {

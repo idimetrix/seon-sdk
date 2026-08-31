@@ -278,8 +278,8 @@ describe("Type Definitions and Interface Validation", () => {
       expect(testItem.item_id).toBe("SKU123");
       expect(testItem.item_quantity).toBe(3);
       expect(testItem.item_price).toBe(29.99);
-      expect(testItem.item_custom_fields.brand).toBe("TestBrand");
-      expect(testItem.item_custom_fields.on_sale).toBe(true);
+      expect(testItem.item_custom_fields?.brand).toBe("TestBrand");
+      expect(testItem.item_custom_fields?.on_sale).toBe(true);
     });
 
     it("should handle various custom field types", () => {
@@ -302,15 +302,15 @@ describe("Type Definitions and Interface Validation", () => {
         },
       };
 
-      expect(typeof itemWithVariousFields.item_custom_fields.string_field).toBe(
-        "string",
-      );
       expect(
-        typeof itemWithVariousFields.item_custom_fields.boolean_field,
+        typeof itemWithVariousFields.item_custom_fields?.string_field,
+      ).toBe("string");
+      expect(
+        typeof itemWithVariousFields.item_custom_fields?.boolean_field,
       ).toBe("boolean");
-      expect(typeof itemWithVariousFields.item_custom_fields.number_field).toBe(
-        "number",
-      );
+      expect(
+        typeof itemWithVariousFields.item_custom_fields?.number_field,
+      ).toBe("number");
     });
   });
 

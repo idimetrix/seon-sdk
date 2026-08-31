@@ -15,9 +15,7 @@ describe("Seon Class Constructor and Basic Functionality", () => {
       expect(seon).toBeInstanceOf(Seon);
       // Access public readonly properties for testing
       expect(seon.key).toBe(apiKey);
-      expect(seon.url).toBe(
-        "https://api.seon.io/SeonRestService/fraud-api/v2.0/detect-fraud",
-      );
+      expect(seon.url).toBe("https://api.seon.io/SeonRestService/fraud-api/v2");
     });
 
     it("should initialize with API key and custom URL", () => {
